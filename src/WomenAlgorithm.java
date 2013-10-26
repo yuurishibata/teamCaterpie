@@ -2,9 +2,9 @@ import java.util.ArrayList;
 
 pubic class WomenAlgorithm extends AlgorithmStrategy {
 
-    ArrayList<Entry> inputEntries = new ArrayList<Entry>();
-    ArrayList<Entry> outputEntries = new ArrayList<Entry>();
-    User user = new User();
+    private ArrayList<Entry> inputEntries = new ArrayList<Entry>();
+    private ArrayList<Entry> outputEntries = new ArrayList<Entry>();
+    private User user = new User();
 
 
     public WomenAlgorithm(User user,ArrayList<Entry> entries){

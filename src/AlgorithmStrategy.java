@@ -2,8 +2,8 @@ import java.util.ArrayList;
 
 public class AlgorithmStrategy {
 
-    ArrayList<Entry> inputEntries;
-    ArrayList<Entry> outputEntries;
+    private ArrayList<Entry> inputEntries;
+    private ArrayList<Entry> outputEntries;
 
     public AlgorithmStrategy(){
 	inputEntries = new ArrayList<Entry>();
