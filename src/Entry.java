@@ -26,7 +26,6 @@ public class Entry {
 
     public void print(){
 
-	//System.out.println();
 	for(String s : texts){
 
 	    System.out.println(s);
