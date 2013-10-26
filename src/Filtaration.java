@@ -19,7 +19,7 @@ class Filtaration{
     private AlgorithmStrategy setAlgorithm(User user,ArrayList<Entry> entries){
 	
 
-	if(user,isMan()==true){
+	if(user.isMan()==true){
 
 	    return new MenAlgorithm(user,entries);
 
