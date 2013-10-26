@@ -2,8 +2,8 @@ import java.util.ArrayList;
 
 public class MenAlgorithm extends AlgorithmStrategy{
 
-    ArrayList<Entry> inputEntries = new ArrayList<Entry>();
-    ArrayList<Entry> outputEntries = new ArrayList<Entry>();
+    private ArrayList<Entry> inputEntries = new ArrayList<Entry>();
+    private ArrayList<Entry> outputEntries = new ArrayList<Entry>();
     
     User user = new User();
 
