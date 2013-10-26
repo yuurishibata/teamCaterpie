@@ -1,10 +1,10 @@
 public class User{
 
-    String name = "MR_DEFAULT_X";
-    final static int MAN = 1;
-    final static int WOMAN = 2;
-    int sex = MAN;//default
-    int location = 0;
+    private String name = "MR_DEFAULT_X";
+    private final static int MAN = 1;
+    private final static int WOMAN = 2;
+    private int sex = MAN;//default
+    private int location = 0;
 
     public User(){
     
