@@ -12,7 +12,7 @@ class Filtaration{
 	AlgorithmStrategy alg = setAlgorithm(user,inputEntries);
 	outputEntries = alg.process();
 
-	AlgorithmTest(user,outputEntries);
+	//AlgorithmTest(user,outputEntries);
 
     }
 
