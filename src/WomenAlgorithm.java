@@ -16,7 +16,6 @@ pubic class WomenAlgorithm extends AlgorithmStrategy {
 
     public ArrayList<Entry> process(){
 
-
 	return this.inputEntries;
 
     }
