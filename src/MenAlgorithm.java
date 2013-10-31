@@ -1,4 +1,4 @@
-public class MenAlgorithm implements AlgorithmStrategy {
+public class MenAlgorithm implements AlgorithmInterface {
 
     private String title;
     private String content;
