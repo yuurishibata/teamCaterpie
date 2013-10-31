@@ -1,8 +1,8 @@
 public class MenAlgorithm implements AlgorithmStrategy {
 
-    String title;
-    String content;
-    String[] keywords = { "メンズ", "MENS", "Men's", "MEN'S", "男", "男性", "男性用",
+    private String title;
+    private String content;
+    private String[] keywords = { "メンズ", "MENS", "Men's", "MEN'S", "男", "男性", "男性用",
 			  "俺", "僕", "Boy", "BOY", "ボーイ" };
 
     public MenAlgorithm(String title, String content) {

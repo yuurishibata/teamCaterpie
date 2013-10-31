@@ -1,8 +1,8 @@
 public class WomenAlgorithm implements AlgorithmStrategy {
 
-    String title;
-    String content;
-    String[] keywords = { "レースピース", "ワンピース", "ワンピ", "スカート", "ブラウス", "ショーパン",
+    private  String title;
+    private String content;
+    private String[] keywords = { "レースピース", "ワンピース", "ワンピ", "スカート", "ブラウス", "ショーパン",
 			  "ワンピース", "かわい", "可愛", "カワイ", "女性", "フェミニン", "私", "女の子" };
 
     public WomenAlgorithm(String title, String content) {
