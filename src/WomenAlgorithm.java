@@ -1,23 +1,29 @@
-import java.util.ArrayList;
+public class WomenAlgorithm implements AlgorithmStrategy {
 
-pubic class WomenAlgorithm extends AlgorithmStrategy {
+    String title;
+    String content;
+    String[] keywords = { "レースピース", "ワンピース", "ワンピ", "スカート", "ブラウス", "ショーパン",
+			  "ワンピース", "かわい", "可愛", "カワイ", "女性", "フェミニン", "私", "女の子" };
 
-    private ArrayList<Entry> inputEntries = new ArrayList<Entry>();
-    private ArrayList<Entry> outputEntries = new ArrayList<Entry>();
-    private User user = new User();
+    public WomenAlgorithm(String title, String content) {
 
-
-    public WomenAlgorithm(User user,ArrayList<Entry> entries){
-
-	this.user  = user;
-	this.inputEntries = entries;
+	this.title = title;
+	this.content = content;
 
     }
 
-    public ArrayList<Entry> process(){
+    public boolean process() {
 
-	return this.inputEntries;
+	for (int i = 0; i < keywords.length; i++) {
 
+	    if (title.contains(keywords[i]) || content.contains(keywords[i])) {
+
+		return true;
+
+	    }
+	}
+
+	return false;
     }
 
 }
