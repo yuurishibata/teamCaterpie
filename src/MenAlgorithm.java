@@ -1,25 +1,29 @@
-import java.util.ArrayList;
+public class MenAlgorithm implements AlgorithmStrategy {
 
-public class MenAlgorithm extends AlgorithmStrategy{
+    String title;
+    String content;
+    String[] keywords = { "メンズ", "MENS", "Men's", "MEN'S", "男", "男性", "男性用",
+			  "俺", "僕", "Boy", "BOY", "ボーイ" };
 
-    private ArrayList<Entry> inputEntries = new ArrayList<Entry>();
-    private ArrayList<Entry> outputEntries = new ArrayList<Entry>();
-    
-    User user = new User();
+    public MenAlgorithm(String title, String content) {
 
-    
-    public MenAlgorithm(User user,ArrayList<Entry> entries){
+	this.title = title;
+	this.content = content;
 
-	this.user = user;
-	this.inputEntries = entries;
-	
     }
 
-    public ArrayList<Entry> process(){
+    public boolean process() {
 
-	return this.inputEntries;
+	for (int i = 0; i < keywords.length; i++) {
 
+	    if (title.contains(keywords[i]) || content.contains(keywords[i])) {
 
+		return true;
+
+	    }
+	}
+
+	return false;
     }
 
 }
