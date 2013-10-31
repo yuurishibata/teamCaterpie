@@ -1,4 +1,4 @@
-public class WomenAlgorithm implements AlgorithmStrategy {
+public class WomenAlgorithm implements AlgorithmInterface {
 
     private  String title;
     private String content;
