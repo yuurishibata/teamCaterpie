@@ -1,43 +1,35 @@
-import java.util.ArrayList;
+public class Filtaration {
 
-class Filtaration{
+    public static void main(String[] args) {
 
-    public static void main(String[] args){
+	int result = execute(
+			     "'S LIFE in SHIBUYA Vol.64",
+			     "こんにちは！本日の、リアルコーディネイトはこちら☆Model:TSUBOTops:＜  BEAMS （ビームス ）＞品番：13-11-0109￥10,290Shoes:＜NEW BALANCE（ニューバランス）＞Welcome to SHIBUYA!!公式アカウントにBEAMSが参加中♪新鮮な情報をいち早く、皆様の元へお届けして参ります★登録お願いします！ビームス 渋谷Shop Blogビームス タイム（雑貨/ビームスT）ビームス ライツ 渋谷お問い合わせはこちらまでビームス 渋谷03-5458-4129CHII");
 
-	
-	ArrayList<Entry> inputEntries = new ArrayList<Entry>();
-	ArrayList<Entry> outputEntries = new ArrayList<Entry>();
-	User user = new User();
+	System.out.println(result);
 
-	AlgorithmStrategy alg = setAlgorithm(user,inputEntries);
-	outputEntries = alg.process();
-
-	//AlgorithmTest(user,outputEntries);
-
+	System.out.println("END");
     }
 
-    private AlgorithmStrategy setAlgorithm(User user,ArrayList<Entry> entries){
-	
+    public static int execute(String title, String content) {
 
-	if(user.isMan()==true){
+	// アルゴリズム処理の準備
+	WomenAlgorithm wAlg = new WomenAlgorithm(title, content);
+	MenAlgorithm mAlg = new MenAlgorithm(title, content);
 
-	    return new MenAlgorithm(user,entries);
+	if (wAlg.process()) {
+	    // もし女性用なら
+	    return 2;
 
-	}else{
+	} else if (mAlg.process()) {
+	    // もし男性用なら
+	    return 1;
 
-	    return new WomenAlgorithm(user,entries);
+	} else {
+
+	    // その他
+	    return 0;
 
 	}
     }
-    
-    private void AlgorithmTest(User user,ArrayList<Entry> outputEntries){
-	
-	user.print();
-
-	for(Entry entry : outputEntries){
-	    entry.print();
-	}
-	
-    }
-
 }
