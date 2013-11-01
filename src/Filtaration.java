@@ -2,13 +2,26 @@ public class Filtaration {
 
     public static void main(String[] args) {
 
-	int result = execute(
-			     "'S LIFE in SHIBUYA Vol.64",
-			     "こんにちは！本日の、リアルコーディネイトはこちら☆Model:TSUBOTops:＜  BEAMS （ビームス ）＞品番：13-11-0109￥10,290Shoes:＜NEW BALANCE（ニューバランス）＞Welcome to SHIBUYA!!公式アカウントにBEAMSが参加中♪新鮮な情報をいち早く、皆様の元へお届けして参ります★登録お願いします！ビームス 渋谷Shop Blogビームス タイム（雑貨/ビームスT）ビームス ライツ 渋谷お問い合わせはこちらまでビームス 渋谷03-5458-4129CHII");
+	test();
 
-	System.out.println(result);
+    }
 
-	System.out.println("END");
+    public static void test() {
+
+	System.out.println(execute("BOY'S LIFE in SHIBUYA Vol.64",
+				   "こんにちは！本日の、リアルコーディネイトはこちら☆odel:TSUBOTops:＜  BEAMS （ビームス ）"));
+	System.out.println(execute("女性用のワンピースを新しく入荷しました！",
+				   "ビームス ライツ 渋谷お問い合わせはこちらまでビームス 渋谷03-5458-4129CHII"));
+	System.out.println(execute("よかったら覗いてください",
+				   "新作ITEMを使ったコーディネートが多数掲載されていますよドキドキドキドキ"));
+	System.out.println(execute("男性用のパンツ入荷しました！",
+				   "店頭にて無料で配布しておりますのでぜひGETして下さいね今月の表紙を飾っているのは、玉城ティナさん！！"));
+	System.out
+	    .println(execute("値下げしましたので、スカート買いに来てください。キュートなやつです！！！",
+			     "明日の朝チェックして、高値の方にお譲りします。ちなみに、いつもはコメント承認制なのですが、それだと分かりづらいと思うので"));
+
+	System.out.println(execute("", ""));
+
     }
 
     public static int execute(String title, String content) {
@@ -31,5 +44,26 @@ public class Filtaration {
 	    return 0;
 
 	}
+
+	/**
+	 * ArrayList<AlgorithmStrategy> algs = new
+	 * ArrayList<AlgorithmStrategy>();
+	 * 
+	 * algs.add(wAlg); algs.add(mAlg);
+	 * 
+	 * for (AlgorithmStrategy alg : algs) {
+	 * 
+	 * if (alg.process()) {
+	 * 
+	 * return alg.getValue();
+	 * 
+	 * }
+	 * 
+	 * }
+	 * 
+	 * return 0;
+	 **/
+
     }
+
 }
