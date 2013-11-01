@@ -1,3 +1,9 @@
 /bin
 build
 
+
+
+# eclipse settings
+.classpath
+.project
+.settings/
