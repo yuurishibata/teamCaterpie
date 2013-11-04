@@ -2,7 +2,7 @@ public class MenAlgorithm implements AlgorithmInterface {
 
     private String title;
     private String content;
-    private String[] keywords = { "メンズ", "MENS", "Men's", "MEN'S", "男", "男性", "男性用",
+    private String[] keywords = { "メンズ", "MEN", "Men", "MEN'S", "男", "男性", "男性用",
 			  "俺", "僕", "Boy", "BOY", "ボーイ" };
 
     public MenAlgorithm(String title, String content) {
