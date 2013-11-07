@@ -19,7 +19,7 @@ public class Filtaration {
 	String allTexts;// タイトルと本文が未分離のテキスト
 	String[] contents;// タイトルと本文が分かれているテキスト
 
-	for (int i = 0; i < 300; i++) {
+	for (int i = 0; i < 500; i++) {
 
 	    // もし、テキストの取得に失敗したら、ただちに処理を終了。
 	    if ((allTexts = in.readLine()) == null) {
