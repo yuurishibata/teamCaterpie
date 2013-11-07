@@ -1,50 +1,74 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
 public class Filtaration {
 
-	public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
-		test();
+	test();
+
+    }
+
+    public static void test() throws IOException {
+
+	String path = "sample.txt";
+
+	BufferedReader in = new BufferedReader(new FileReader(path));
+
+	String allTexts;// タイトルと本文が未分離のテキスト
+	String[] contents;// タイトルと本文が分かれているテキスト
+
+	for (int i = 0; i < 300; i++) {
+
+	    // もし、テキストの取得に失敗したら、ただちに処理を終了。
+	    if ((allTexts = in.readLine()) == null) {
+		break;
+	    }
+
+	    // 全てのデータを分解。文字列型の配列変数contentsに各要素を格納。
+	    contents = allTexts.split("");
+
+	    // タイトルとテキストデータを取得できない場合は、次のブログ記事に移動
+	    if (contents.length < 2) {
+		continue;
+	    }
+
+	    // 出力
+	    System.out.printf("[%3d] %d ", (i + 1),
+			      execute(contents[1], contents[2]));
+
+	    // 10件ごとに改行
+	    if ((i + 1) % 10 == 0) {
+
+		System.out.println("");
+
+	    }
+
+	}
+
+	in.close();
+    }
+
+    public static int execute(String title, String content) {
+
+	WomenAlgorithm wAlg = new WomenAlgorithm(title, content);
+	MenAlgorithm mAlg = new MenAlgorithm(title, content);
+
+	if (wAlg.process()) {
+
+	    return 2;
+
+	} else if (mAlg.process()) {
+
+	    return 1;
+
+	} else {
+
+	    return 0;
 
 	}
 
-	public static void test() {
-
-		System.out.println(execute("BOY'S LIFE in SHIBUYA Vol.64",
-				"こんにちは！本日の、リアルコーディネイトはこちら☆odel:TSUBOTops:＜  BEAMS （ビームス ）"));
-		System.out.println(execute("女性用のワンピースを新しく入荷しました！",
-				"ビームス ライツ 渋谷お問い合わせはこちらまでビームス 渋谷03-5458-4129CHII"));
-		System.out.println(execute("よかったら覗いてください",
-				"新作ITEMを使ったコーディネートが多数掲載されていますよドキドキドキドキ"));
-		System.out.println(execute("男性用のパンツ入荷しました！",
-				"店頭にて無料で配布しておりますのでぜひGETして下さいね今月の表紙を飾っているのは、玉城ティナさん！！"));
-		System.out
-				.println(execute("値下げしましたので、スカート買いに来てください。キュートなやつです！！！",
-						"明日の朝チェックして、高値の方にお譲りします。ちなみに、いつもはコメント承認制なのですが、それだと分かりづらいと思うので"));
-
-		System.out.println(execute("", ""));
-
-	}
-
-	public static int execute(String title, String content) {
-
-		// アルゴリズム処理の準備
-		WomenAlgorithm wAlg = new WomenAlgorithm(title, content);
-		MenAlgorithm mAlg = new MenAlgorithm(title, content);
-
-		if (wAlg.process()) {
-			// もし女性用なら
-			return 2;
-
-		} else if (mAlg.process()) {
-			// もし男性用なら
-			return 1;
-
-		} else {
-
-			// その他
-			return 0;
-
-		}
-
-	}
+    }
 
 }
