@@ -1,9 +1,14 @@
 public class WomenAlgorithm implements AlgorithmInterface {
 
-    private  String title;
-    private String content;
-    private String[] keywords = { "ワンピ", "スカート", "ブラウス", "ショーパン",
-			  "ワンピース", "かわい", "可愛", "カワイ", "女性", "フェミニン", "私", "女の子" };
+    String title;
+    String content;
+    String[] keywords = { "キレイ", "きれい", "リボン", "カーラー", "ポーチ", "化粧", "マスカラ",
+			  "ブラジャー", "ヘアピン", "カチューシャ", "サロン", "ハーフアップ", "ネイル", "美脚", "イアリング",
+			  "ヒール", "キャミソール", "フリル", "レースピース", "ワンピース", "ワンピ", "スカート", "ブラウス",
+			  "ショーパン", "ワンピース", "かわい", "可愛", "カワイ", "女性", "フェミニン", "わたし", "私",
+			  "女の子", "ボーイッシュ", "ショートパンツ" };
+
+    private final static int RESULT = 2;
 
     public WomenAlgorithm(String title, String content) {
 
@@ -25,5 +30,9 @@ public class WomenAlgorithm implements AlgorithmInterface {
 
 	return false;
     }
+
+    /**
+     * public int getValue() { return this.value; }
+     **/
 
 }
