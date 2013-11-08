@@ -2,8 +2,11 @@ public class MenAlgorithm implements AlgorithmInterface {
 
     private String title;
     private String content;
-    private String[] keywords = { "メンズ", "MEN", "Men", "MEN'S", "男", "男性", "男性用",
-			  "俺", "僕", "Boy", "BOY", "ボーイ" };
+    private String[] keywords = { "デッキシューズ", "ヒゲ", "ひげ", "ボクサー", "トランクス",
+				  "カフス", "メンズ", "MENS", "Men's", "MEN'S", "男", "俺", "僕", "Boy",
+				  "BOY", "ボーイ", "チノパン" };
+
+    private final static int RESULT = 1;
 
     public MenAlgorithm(String title, String content) {
 
@@ -25,5 +28,9 @@ public class MenAlgorithm implements AlgorithmInterface {
 
 	return false;
     }
+
+    /**
+     * public int getValue() { return this.value; }
+     **/
 
 }
