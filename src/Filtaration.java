@@ -18,6 +18,9 @@ public class Filtaration {
 
 	String allTexts;// タイトルと本文が未分離のテキスト
 	String[] contents;// タイトルと本文が分かれているテキスト
+	DegreeCalculationAlgorithm d;
+	SearchText s;
+
 
 	for (int i = 0; i < 500; i++) {
 
@@ -34,14 +37,14 @@ public class Filtaration {
 		continue;
 	    }
 
-	    // 出力
-	    System.out.printf("[%3d] %d ", (i + 1),
-			      execute(contents[1], contents[2]));
+	    // 一つの単語とブログ内容
+	    // s = new SearchText(i + 1, contents[1], contents[2], "目");
+	    // s.printResult();
 
-	    // 10件ごとに改行
-	    if ((i + 1) % 10 == 0) {
-
-		System.out.println("");
+	    // 一つのブログと辞書とのマッチ数
+	    // DegreeCalculationAlgorithm d = new DegreeCalculationAlgorithm(
+	    // i + 1, contents[1], contents[2]);
+	    // d.process();
 
 	    }
 
