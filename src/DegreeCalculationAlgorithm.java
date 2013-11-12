@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class DegreeCalculationAlgorithm {
 
     private String title;
@@ -13,6 +15,7 @@ public class DegreeCalculationAlgorithm {
 				    "ショーパン", "ワンピース", "かわい", "可愛", "カワイ", "女性", "フェミニン", "わたし", "私",
 				    "女の子", "ボーイッシュ", "ショートパンツ" };
     private int textNumber;
+    private ArrayList<String> matchWords = new ArrayList<String>();
 
     public DegreeCalculationAlgorithm(int textNumber, String title, String text) {
 	this.textNumber = textNumber;
@@ -29,10 +32,12 @@ public class DegreeCalculationAlgorithm {
 
 	    if (title.contains(word)) {
 		System.out.print("1");
+		matchWords.add(word);
 	    }
 
 	    if (text.contains(word)) {
 		System.out.print("1");
+		matchWords.add(word);
 	    }
 	}
 
@@ -41,14 +46,21 @@ public class DegreeCalculationAlgorithm {
 
 	    if (title.contains(word)) {
 		System.out.print("2");
+		matchWords.add(word);
 	    }
 
 	    if (text.contains(word)) {
 		System.out.print("2");
+		matchWords.add(word);
 	    }
 	}
 
 	System.out.println("");
+	for (String matchWord : matchWords) {
+
+	    System.out.println(matchWord + ",");
+
+	}
 
     }
 
