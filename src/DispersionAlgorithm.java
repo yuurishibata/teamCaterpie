@@ -10,14 +10,13 @@ public class DispersionAlgorithm {
     private double womenPoints;
     private String[] menWords = { "イケメン", "デッキシューズ", "ヒゲ", "ひげ", "ボクサー",
 				  "トランクス", "カフス", "メンズ", "MENS", "Men's", "MEN'S", "男", "俺", "僕",
-				  "Boy", "BOY", "ボーイ", "チノパン", "ミリタリー", "軍" };
+				  "Boy", "BOY", "チノパン", "ミリタリー", "軍" };
     private String[] womenWords = { "キレイ", "きれい", "リボン", "カーラー", "ポーチ", "化粧",
 				    "マスカラ", "ブラジャー", "ヘアピン", "カチューシャ", "サロン", "ハーフアップ", "ネイル", "美脚",
-				    "イアリング", "ヒール", "キャミソール", "フリル", "レースピース", "ワンピ", "スカート", "ブラウス",
-				    "ショーパン", "ワンピース", "かわい", "可愛", "カワイ", "女性", "フェミニン", "わたし", "私",
-				    "女の子", "ボーイッシュ", "ショートパンツ", "胸元", "レース", "綺麗", "ヒップ", "ライン",
-				    "ウエスト", "バスト", "フレア", "ガーリー", "素敵", "シルエット", "パフ", "ハート", "靴",
-				    "LOVE" };
+				    "イアリング", "ヒール", "キャミソール", "フリル", "レースピース", "スカート", "ブラウス", "ショーパン",
+				    "ワンピース", "かわい", "可愛", "カワイ", "女性", "フェミニン", "わたし", "私", "女の子",
+				    "ボーイッシュ", "ショートパンツ", "胸元", "レース", "綺麗", "ヒップ", "ライン", "ウエスト",
+				    "バスト", "フレア", "ガーリー", "素敵", "シルエット", "パフ", "ハート", "靴", "LOVE" };
     private String[] exceptionalWords = { "酒", "食", "飲", "料理" };
     private String[] specialWords = { "☆", "\\(", "ちゃん" };
     private int textNumber = 0;
@@ -51,10 +50,20 @@ public class DispersionAlgorithm {
 	    }
 
 	    if (text.contains(word)) {
+
 		System.out.print("1");
 		MmatchWords.add(word);
 		MIndexs.add(text.indexOf(word));
 		allIndexs.add(text.indexOf(word));
+		// もし同じ単語が複数ある場合
+		if (text.indexOf(word) != text.lastIndexOf(word)) {
+
+		    System.out.println("1");
+		    MIndexs.add(text.lastIndexOf(word));
+		    allIndexs.add(text.lastIndexOf(word));
+		    MmatchWords.add(word);
+		}
+
 	    }
 	}
 
@@ -73,6 +82,15 @@ public class DispersionAlgorithm {
 		WmatchWords.add(word);
 		WIndexs.add(text.indexOf(word));
 		allIndexs.add(text.indexOf(word));
+
+		// もし同じ単語が複数ある場合
+		if (text.indexOf(word) != text.lastIndexOf(word)) {
+		    System.out.print("2");
+		    WIndexs.add(text.lastIndexOf(word));
+		    allIndexs.add(text.lastIndexOf(word));
+		    WmatchWords.add(word);
+		}
+
 	    }
 	}
 
@@ -133,7 +151,7 @@ public class DispersionAlgorithm {
 		int min = (int) o[0];
 		int max = (int) o[o.length - 1];
 
-		System.out.println("男性キーワードの分散度 : " + (max - min));
+		System.out.println("男性キーワードの分散値 : " + (max - min));
 
 	    }
 	}
@@ -148,7 +166,7 @@ public class DispersionAlgorithm {
 		int min = (int) o[0];
 		int max = (int) o[o.length - 1];
 
-		System.out.println("女性キーワードの分散度 : " + (max - min));
+		System.out.println("女性キーワードの分散値 : " + (max - min));
 	    }
 	}
 
