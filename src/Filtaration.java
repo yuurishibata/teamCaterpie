@@ -20,7 +20,7 @@ public class Filtaration {
 	String[] contents;// タイトルと本文が分かれているテキスト
 	DegreeCalculationAlgorithm d;
 	SearchText s;
-
+	DispersionAlgorithm d;
 
 	for (int i = 0; i < 500; i++) {
 
@@ -45,6 +45,9 @@ public class Filtaration {
 	    // DegreeCalculationAlgorithm d = new DegreeCalculationAlgorithm(
 	    // i + 1, contents[1], contents[2]);
 	    // d.process();
+	    
+	    d = new DispersionAlgorithm(i+1,contents[1],contents[2]);
+	    d.process();
 
 	    }
 
