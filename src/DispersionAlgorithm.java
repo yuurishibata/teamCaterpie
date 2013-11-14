@@ -58,7 +58,7 @@ public class DispersionAlgorithm {
 		// もし同じ単語が複数ある場合
 		if (text.indexOf(word) != text.lastIndexOf(word)) {
 
-		    System.out.println("1");
+		    System.out.print("1");
 		    MIndexs.add(text.lastIndexOf(word));
 		    allIndexs.add(text.lastIndexOf(word));
 		    MmatchWords.add(word);
