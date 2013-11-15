@@ -8,6 +8,7 @@ public class DispersionAlgorithm {
     // points
     private double menPoints;
     private double womenPoints;
+    // keywords
     private String[] menWords = { "イケメン", "デッキシューズ", "ヒゲ", "ひげ", "ボクサー",
 				  "トランクス", "カフス", "メンズ", "MENS", "Men's", "MEN'S", "男", "俺", "僕",
 				  "Boy", "BOY", "チノパン", "ミリタリー", "軍" };
@@ -17,13 +18,14 @@ public class DispersionAlgorithm {
 				    "ワンピース", "かわい", "可愛", "カワイ", "女性", "フェミニン", "わたし", "私", "女の子",
 				    "ボーイッシュ", "ショートパンツ", "胸元", "レース", "綺麗", "ヒップ", "ライン", "ウエスト",
 				    "バスト", "フレア", "ガーリー", "素敵", "シルエット", "パフ", "ハート", "靴", "LOVE" };
+    // unique words
     private String[] exceptionalWords = { "酒", "食", "飲", "料理" };
     private String[] specialWords = { "☆", "\\(", "ちゃん" };
     private int textNumber = 0;
-    // word
+    // matched word
     private ArrayList<String> MmatchWords = new ArrayList<String>();
     private ArrayList<String> WmatchWords = new ArrayList<String>();
-    // index
+    // indexs
     private ArrayList<Integer> allIndexs = new ArrayList<Integer>();// 全てのワードのindex
     private ArrayList<Integer> MIndexs = new ArrayList<Integer>();// 男のキーワードの各index
     private ArrayList<Integer> WIndexs = new ArrayList<Integer>();// 女のキーワードの各index
@@ -101,27 +103,46 @@ public class DispersionAlgorithm {
 	// 辞書と一致した単語のインデックスを全て知りたい場合は次のメソッドのコメントアウトを外す。
 	printAllIndexs();
 	// 辞書と一致した単語の分散度を知りたい場合は次のメソッドのコメントアウトを外す。
-	printDispersion();
+	printDispersionValue();
 
     }
 
     private void printAllIndexs() {
 
+	// 出力準備
 	System.out.print("INDEXS : [");
+
 	// 辞書とのキーワードにマッチしてない
 	if (allIndexs.isEmpty() == true) {
+	    // 何もないことを表示
 	    System.out.print("NONE");
 	}
-	// 辞書とのキーワードにマッチした
+
+	// 辞書とのキーワードにマッチした単語のインデックスを全て表示する。
 	if (allIndexs.isEmpty() == false) {
-	    for (int index : allIndexs) {
-		System.out.print(index + ",");
+
+	    for (int i = 0; i < allIndexs.size(); i++) {
+		// 最後の要素だけは、見やすさのために一工夫
+		if (i == allIndexs.size() - 1) {
+		    System.out.print(allIndexs.get(allIndexs.size() - 1));
+		} else {
+		    System.out.print(allIndexs.get(i) + ",");
+		}
+
 	    }
 	}
 	System.out.println("]");
     }
 
     private void printMatchWords() {
+
+	// もし、表示する内容が無い場合、何もしないでreturn
+	if (MmatchWords.isEmpty() == true && WmatchWords.isEmpty() == true) {
+	    return;
+	}
+
+	// 出力準備
+	System.out.print("KEYWORDS : ");
 
 	for (String s : MmatchWords) {
 	    System.out.print("*" + s + "*");
@@ -135,7 +156,10 @@ public class DispersionAlgorithm {
 	}
     }
 
-    private void printDispersion() {
+    private void printDispersionValue() {
+
+	int Mdispersion = 0;
+	int Wdispersion = 0;
 
 	// もし、男性のキーワードと一致したものが存在し、
 	if (MIndexs.isEmpty() == false) {
@@ -171,5 +195,4 @@ public class DispersionAlgorithm {
 	}
 
     }
-
 }
