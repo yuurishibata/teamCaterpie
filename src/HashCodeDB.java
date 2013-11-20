@@ -3,7 +3,7 @@ import java.util.HashMap;
 public class HashCodeDB {
 
     // 疑似的データベースの基幹変数
-    HashMap<Integer, RData> hash = new HashMap<Integer, RData>();
+    private HashMap<Integer, RData> hash = new HashMap<Integer, RData>();
 
     // コンストラクタ
     public HashCodeDB() {
