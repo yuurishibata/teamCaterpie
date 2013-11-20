@@ -13,7 +13,7 @@ public class HashCodeDB {
 
     }
 
-　　//　データの登録を行うメソッド。ここに統計結果を記述する。
+	//　データの登録を行うメソッド。ここに統計結果を記述する。
     public void setDB() {
 
 	// new RData (support , confidence , lift )
