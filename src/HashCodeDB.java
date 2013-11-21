@@ -67,7 +67,7 @@ public class HashCodeDB {
 	if (hashRData.containsKey(hashcode) == false) {
 
 	    // 値のセットされいないRDataを返却する。
-	    RData rd = new RData(0.0, 0.0, 0.0);
+	    RData rd = new RData();
 
 	    return rd;
 	}
