@@ -2,12 +2,15 @@ import java.util.HashMap;
 
 public class HashCodeDB {
 
-    // 疑似的データベースの基幹変数
-    HashMap<Integer, RData> hashRData = new HashMap<Integer, RData>();
+    // 疑似的データベースの基幹的な役割を担う諸変数
+    HashMap<String, Double> normalPoints = new HashMap<String, Double>();
     HashMap<String, Integer> hashcodeMap = new HashMap<String, Integer>();
+    HashMap<Integer, RData> hashRData = new HashMap<Integer, RData>();
 
     // コンストラクタ
     public HashCodeDB() {
+	// 標準ポイント（１つの形態素に対して、一つの実数を持つhashmap）を返却するhashmapを設定する。
+	setNormalPoint();
 
 	// 各単語とそのハッシュコードの対応を確実化する
 	setEachWord();
@@ -17,6 +20,22 @@ public class HashCodeDB {
 
     }
 
+    private void setNormalPoint() {
+
+	normalPoints.put("ワンピース", 5.0);
+	normalPoints.put("男性", 4.0);
+
+    }
+
+    public double getPoint(String word) {
+
+	if (normalPoints.containsKey(word) == false) {
+	    return 0.0;
+	}
+
+	return normalPoints.get(word);
+
+    }
 
     private void setEachWord() {
 
@@ -34,6 +53,7 @@ public class HashCodeDB {
 	hashcodeMap.put("素敵", "素敵".hashCode());
 	hashcodeMap.put("レース", "レース".hashCode());
 	hashcodeMap.put("ショートパンツ", "ショートパンツ".hashCode());
+	hashcodeMap.put("リボン", "リボン".hashCode());
 
     }
 
@@ -55,6 +75,8 @@ public class HashCodeDB {
 									     9.9, 10.0));
 	hashRData.put(getHashCode("ワンピ") + getHashCode("素敵"), new RData(20.0,
 									     30.0, 45.0));
+	hashRData.put(getHashCode("リボン") + getHashCode("ワンピ"), new RData(8.3,
+									       7.3, 6.3));
 
     }
 
