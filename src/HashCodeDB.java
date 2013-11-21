@@ -3,40 +3,76 @@ import java.util.HashMap;
 public class HashCodeDB {
 
     // 疑似的データベースの基幹変数
-    private HashMap<Integer, RData> hash = new HashMap<Integer, RData>();
+    HashMap<Integer, RData> hashRData = new HashMap<Integer, RData>();
+    HashMap<String, Integer> hashcodeMap = new HashMap<String, Integer>();
 
     // コンストラクタ
     public HashCodeDB() {
 
+	// 各単語とそのハッシュコードの対応を確実化する
+	setEachWord();
+
 	// 単語の組み合わせとそのそれぞれの統計的データの実数三つの登録
-	setDB();
+	setEachPair();
 
     }
 
-	//　データの登録を行うメソッド。ここに統計結果を記述する。
-    public void setDB() {
 
-	// new RData (support , confidence , lift )
-	hash.put("軍".hashCode() + "ミリタリー".hashCode(), new RData(2.1, 2.2, 2.3));
-	hash.put("ワンピ".hashCode() + "可愛い".hashCode(), new RData(3.1, 3.2, 3.3));
-	hash.put("ワンピース".hashCode() + "素敵".hashCode(), new RData(4.1, 4.2, 4.3));
-	hash.put("女性".hashCode() + "コクーン".hashCode(), new RData(5.1, 5.2, 5.3));
-	hash.put("フリル".hashCode() + "ウエスト".hashCode(), new RData(6.1, 6.2, 6.3));
-	hash.put("フリル".hashCode() + "胸元".hashCode(), new RData(7.1, 7.2, 7.3));
+    private void setEachWord() {
+
+	// データとして使用する各単語を全て登録（する必要がある）
+	// hashcodeMap.put("the word","the word".hashCode());で登録完了！
+	hashcodeMap.put("軍", "軍".hashCode());
+	hashcodeMap.put("ミリタリー", "ミリタリー".hashCode());
+	hashcodeMap.put("ワンピ", "ワンピ".hashCode());
+	hashcodeMap.put("女性", "女性".hashCode());
+	hashcodeMap.put("ガーリー", "ガーリー".hashCode());
+	hashcodeMap.put("コクーン", "コクーン".hashCode());
+	hashcodeMap.put("ウエスト", "ウエスト".hashCode());
+	hashcodeMap.put("フリル", "フリル".hashCode());
+	hashcodeMap.put("胸元", "胸元".hashCode());
+	hashcodeMap.put("素敵", "素敵".hashCode());
+	hashcodeMap.put("レース", "レース".hashCode());
+	hashcodeMap.put("ショートパンツ", "ショートパンツ".hashCode());
+
+    }
+
+    // ワードをinputしたら、その登録されているhashcodeを返却する。
+    private int getHashCode(String word) {
+
+	if (hashcodeMap.containsKey(word) == false) {
+	    return 0;
+	}
+
+	return hashcodeMap.get(word);
+
+    }
+
+    // ２つ単語の組み合わせを登録
+    private void setEachPair() {
+
+	hashRData.put(getHashCode("女性") + getHashCode("フリル"), new RData(9.8,
+									     9.9, 10.0));
+	hashRData.put(getHashCode("ワンピ") + getHashCode("素敵"), new RData(20.0,
+									     30.0, 45.0));
 
     }
 
     // 文字列2つを使って、統計の数値を取得する。
     public RData getRData(String s1, String s2) {
 
-	int hashcode = s1.hashCode() + s2.hashCode();
+	int hashcode = getHashCode(s1) + getHashCode(s2);
 
 	// もし、キー値としてハッシュコードの値が登録されていなかった場合
-	if (hash.containsKey(hashcode) == false) {
-	    return new RData(0.0, 0.0, 0.0);
+	if (hashRData.containsKey(hashcode) == false) {
+
+	    // 値のセットされいないRDataを返却する。
+	    RData rd = new RData(0.0, 0.0, 0.0);
+
+	    return rd;
 	}
 
-	return hash.get(hashcode);
+	return hashRData.get(hashcode);
 
     }
 }
