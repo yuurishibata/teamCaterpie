@@ -17,6 +17,7 @@ public class HashCodeDB {
 
     }
 
+
     private void setEachWord() {
 
 	// データとして使用する各単語を全て登録（する必要がある）
