@@ -4,6 +4,11 @@ class RData {
     private double confidence = 0.0;
     private double lift = 0.0;
 
+    // 引数なしコンストラクタ
+    public RData() {
+	this(0.0, 0.0, 0.0);
+    }
+
     public RData(double support, double confidence, double lift) {
 
 	this.support = support;
