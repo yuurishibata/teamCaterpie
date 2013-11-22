@@ -2,6 +2,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class HashCodeDB {
+	//基本的な使用方法は次の通り。
+	//単語の登録をして、その後にその登録された単語の組み合わせとそれに対応するRのデータを登録すれば準備完了。
+	//それを文字列引数２つで呼び出せる、getRDataメソッドから取得する。getRDataメソッドは
+	//RDataクラスのインスタンスを返却する。
 
     // 疑似的データベースの基幹的な役割を担う諸変数
     HashMap<String, Double> normalPoints = new HashMap<String, Double>();
@@ -10,6 +14,7 @@ public class HashCodeDB {
 
     // コンストラクタ
     public HashCodeDB() {
+
 	// 標準ポイント（１つの形態素に対して、一つの実数を持つhashmap）を返却するhashmapを設定する。
 	setPoints();
 
