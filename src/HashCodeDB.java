@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class HashCodeDB {
@@ -13,39 +14,30 @@ public class HashCodeDB {
 
     // コンストラクタ
     public HashCodeDB() {
-	// 標準ポイント（１つの形態素に対して存在する１つの実数の値のこと）を返却するhashmapを設定する。
-	//これはR言語のデータとは全く別に、準備して置く。データの設定が急務の際に役に立つ。
-	setNormalPoint();
+
+	// 標準ポイント（１つの形態素に対して、一つの実数を持つhashmap）を返却するhashmapを設定する。
+	setPoints();
 
 	// 各単語とそのハッシュコードの対応を確実化する
-	setEachWord();
+	setWords();
 
 	// 単語の組み合わせとそのそれぞれの統計的データの実数三つの登録
-	setEachPair();
+	setPairs();
 
     }
 
-    private void setNormalPoint() {
+    private void setPoints() {
 
 	normalPoints.put("ワンピース", 5.0);
 	normalPoints.put("男性", 4.0);
 
     }
 
-    public double getPoint(String word) {
-
-	if (normalPoints.containsKey(word) == false) {
-	    return 0.0;
-	}
-
-	return normalPoints.get(word);
-
-    }
-
-    private void setEachWord() {
+    private void setWords() {
 
 	// データとして使用する各単語を全て登録（する必要がある）
 	// hashcodeMap.put("the word","the word".hashCode());で登録完了！
+	hashcodeMap.put("男性", "男性".hashCode());
 	hashcodeMap.put("軍", "軍".hashCode());
 	hashcodeMap.put("ミリタリー", "ミリタリー".hashCode());
 	hashcodeMap.put("ワンピ", "ワンピ".hashCode());
@@ -74,7 +66,7 @@ public class HashCodeDB {
     }
 
     // ２つ単語の組み合わせを登録
-    private void setEachPair() {
+    private void setPairs() {
 
 	hashRData.put(getHashCode("女性") + getHashCode("フリル"), new RData(9.8,
 									     9.9, 10.0));
@@ -82,6 +74,20 @@ public class HashCodeDB {
 									     30.0, 45.0));
 	hashRData.put(getHashCode("リボン") + getHashCode("ワンピ"), new RData(8.3,
 									       7.3, 6.3));
+	hashRData.put(getHashCode("レース") + getHashCode("胸元"), new RData(1.5,
+									     1.3, 1.2));
+	hashRData.put(getHashCode("軍") + getHashCode("男性"), new RData(22.2,
+									 22.3, 22.4));
+
+    }
+
+    public double getData(String word) {
+
+	if (normalPoints.containsKey(word) == false) {
+	    return 0.0;
+	}
+
+	return normalPoints.get(word);
 
     }
 
@@ -94,12 +100,65 @@ public class HashCodeDB {
 	if (hashRData.containsKey(hashcode) == false) {
 
 	    // 値のセットされいないRDataを返却する。
-	    RData rd = new RData();
-
-	    return rd;
+	    return new RData();
 	}
 
 	return hashRData.get(hashcode);
+
+    }
+
+    public boolean existRData(String s1, String s2) {
+
+	int hashcode = getHashCode(s1) + getHashCode(s2);
+
+	if (hashRData.containsKey(hashcode) == false) {
+	    return false;
+	}
+
+	return true;
+
+    }
+
+    /**
+     * 
+     * このメソッドの脆弱性は、形態素同士の組み合わせが見つかった場合に、
+     * その組み合わせ以外にも、形態素同士のペアが引数に受け取ったリスト内部にある可能性を無視し、
+     * 最初にマッチしたペアに対応するRのデータを返却してしまう点にある。
+     * 
+     **/
+    public RData getRData(ArrayList<String> als) {
+
+	// データベースからRのデータを取得できないもの。
+	if (als.size() < 2) {
+
+	    // 空のRのデータ
+	    return new RData();
+
+	} else {
+
+	    int hashcode;
+
+	    // そのArrayListに入っている形態素の各組合せ全てに対して
+	    // そのペアがデータベースに登録されているか、走査する。
+	    for (String outside : als) {
+		for (String inside : als) {
+
+		    hashcode = getHashCode(inside) + getHashCode(outside);
+		    // もし、その形態素と形態素の組み合わせが存在したら、
+		    if (hashRData.containsKey(hashcode) == true) {
+			// そのRDataを返却する。
+			return getRData(outside, inside);
+		    }
+
+		}
+
+	    }
+
+	    // もし、全ての組み合わせを走査して、そのペアが登録されていないのなら、
+	    // 空のRのデータを返却する。
+	    return new RData();
+
+	}
 
     }
 }
