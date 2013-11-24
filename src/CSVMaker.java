@@ -30,6 +30,7 @@ public class Filtaration {
 		continue;
 	    }
 
+		//次の引数のディレクトリの場所は僕のパソコンのフォルダの場所なので必ず修正してください。
 	    FileOutputStream csvfile = new FileOutputStream(
 							    "C:\\Users\\to\\Documents\\rdoc\\each-blog" + i + ".txt");
 	    OutputStreamWriter out = new OutputStreamWriter(csvfile,
