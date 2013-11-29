@@ -19,6 +19,7 @@ public class Filtaration {
 
         String allTexts;
         String[] contents;
+        int result;
 
         for (int i = 0; i < 300; i++) {
 
@@ -37,7 +38,7 @@ public class Filtaration {
             
             
             System.out.printf("[%3d]", i+1);
-            execute(contents[1],contents[2]);
+            result = execute(contents[1],contents[2]);
             
 
         }
@@ -51,10 +52,10 @@ public class Filtaration {
     private static int execute(String title,String text){
 	
 	
-	AlgorithmInterface d = new DispersionAlgorithm(title,text);
+	AlgorithmInterface ai = new DispersionAlgorithm(title,text);
          
          
-	return d.process();
+	return ai.process();
 	
     }
 
