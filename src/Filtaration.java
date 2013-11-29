@@ -6,75 +6,57 @@ public class Filtaration {
 
     public static void main(String[] args) throws IOException {
 
-	test();
+	//テスト
+        test();
 
     }
 
     public static void test() throws IOException {
 
-	String path = "sample.txt";
+        String path = "sample.txt";
 
-	BufferedReader in = new BufferedReader(new FileReader(path));
+        BufferedReader in = new BufferedReader(new FileReader(path));
 
-	String allTexts;// タイトルと本文が未分離のテキスト
-	String[] contents;// タイトルと本文が分かれているテキスト
-	DegreeCalculationAlgorithm d;
-	SearchText s;
-	DispersionAlgorithm d;
+        String allTexts;
+        String[] contents;
 
-	for (int i = 0; i < 500; i++) {
+        for (int i = 0; i < 300; i++) {
 
-	    // もし、テキストの取得に失敗したら、ただちに処理を終了。
-	    if ((allTexts = in.readLine()) == null) {
-		break;
-	    }
+            // もし、テキストの取得に失敗したら、ただちに処理を終了。
+            if ((allTexts = in.readLine()) == null) {
+                break;
+            }
 
-	    // 全てのデータを分解。文字列型の配列変数contentsに各要素を格納。
-	    contents = allTexts.split("");
+            // 全てのデータを分解。文字列型の配列変数contentsに各要素を格納。
+            contents = allTexts.split("\t");
 
-	    // タイトルとテキストデータを取得できない場合は、次のブログ記事に移動
-	    if (contents.length < 2) {
-		continue;
-	    }
+            // タイトルとテキストデータを取得できない場合は、次のブログ記事に移動
+            if (contents.length < 3) {
+                continue;
+            }
+            
+            
+            System.out.printf("[%3d]", i+1);
+            execute(contents[1],contents[2]);
+            
 
-	    // 一つの単語とブログ内容
-	    // s = new SearchText(i + 1, contents[1], contents[2], "目");
-	    // s.printResult();
+        }
 
-	    // 一つのブログと辞書とのマッチ数
-	    // DegreeCalculationAlgorithm d = new DegreeCalculationAlgorithm(
-	    // i + 1, contents[1], contents[2]);
-	    // d.process();
-	    
-	    d = new DispersionAlgorithm(i+1,contents[1],contents[2]);
-	    d.process();
-
-	    }
-
-	}
-
-	in.close();
+        in.close();
+        
+        
+        
+    }
+    
+    private static int execute(String title,String text){
+	
+	
+	AlgorithmInterface d = new DispersionAlgorithm(title,text);
+         
+         
+	return d.process();
+	
     }
 
-    public static int execute(String title, String content) {
-
-	WomenAlgorithm wAlg = new WomenAlgorithm(title, content);
-	MenAlgorithm mAlg = new MenAlgorithm(title, content);
-
-	if (wAlg.process()) {
-
-	    return 2;
-
-	} else if (mAlg.process()) {
-
-	    return 1;
-
-	} else {
-
-	    return 0;
-
-	}
-
-    }
 
 }
