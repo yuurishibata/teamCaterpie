@@ -37,7 +37,7 @@ public class Filtaration {
             }
             
             
-            System.out.printf("[%3d]", i+1);
+            System.out.printf("[%3d]", i+1);//ブログ番号をまず出力する。
             result = execute(contents[1],contents[2]);
             
 
@@ -51,10 +51,10 @@ public class Filtaration {
     
     private static int execute(String title,String text){
 	
-	
+	//アルゴリズムの実装をほかの実装からカプセル化する。
 	AlgorithmInterface ai = new DispersionAlgorithm(title,text);
          
-         
+         //アルゴリズム計算の結果を返却する。
 	return ai.process();
 	
     }
