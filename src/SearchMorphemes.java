@@ -6,8 +6,9 @@ public class SearchMorphemes {
     private String title;
     private String text;
     // 辞書に登録されている形態素
-    private String[] menMorphemes;//男性用形態素  
-    private String[] womenMorphemes; //女性用形態素
+    private String[] menMorphemes;//辞書の男性用形態素  
+    private String[] womenMorphemes; //辞書の女性用形態素
+    private String[] exceptionalWords;//ブログ記事が適正か評価する形態素
     // 辞書内の形態素を記事から検索して、合致したものを格納するArrayList
     private ArrayList<String> MenMatchWords = new ArrayList<String>();
     private ArrayList<String> WomenMatchWords = new ArrayList<String>();
@@ -27,6 +28,7 @@ public class SearchMorphemes {
 	MorphemeDictionary md = new MorphemeDictionary();
 	this.menMorphemes = md.getMenWords();
 	this.womenMorphemes = md.getWomenWords();
+	this.exceptionalWords = md.getExceptionalWords();
 	        
     }
 
@@ -36,6 +38,7 @@ public class SearchMorphemes {
 	for (String word : menMorphemes) {
 	    //タイトルの捜索。
 	    if (title.contains(word)) {
+		//男性の形態素の探索なので最後の引数はtrue
 		register(word,title.indexOf(word),true);
 	    }
 	    //本文の探索。
@@ -52,6 +55,7 @@ public class SearchMorphemes {
 	for (String word : womenMorphemes) {
 	    //タイトルの探索。
 	    if (title.contains(word)) {
+		//女性の形態素の探索なので最後の引数はfalse
 		register(word,title.indexOf(word),false);
 	    }
 	    //本文の検索。
@@ -65,21 +69,41 @@ public class SearchMorphemes {
 	}
 
     }
+    /**
+     * ブログ内容が出力に適格か判断するメソッド
+     */
+    public boolean containsException(){
+	
+	//不要語登録された形態素を探索
+	for(String word : exceptionalWords){
+	    //タイトル
+	    if(title.contains(word)){
+		return true;
+	    }
+	    //本文
+	    if(text.contains(word)){
+		return true;
+	    }
+	    
+	}
+	//不要語は存在しなかったので含まないと判断
+	return false;
+    }
         
-    //クラスの属性値に記事内の形態素などを登録するメソッド
+    //クラスの属性値に記事内の形態素・位置などを登録するメソッド
     public void register(String word,int index,boolean isMan){
 	//男性
 	if(isMan==true){
 	    //男性の形態素として登録する
-	    registerAsMan(word, index);
+	    registerManMorpheme(word, index);
             //女性
 	}else{
 	    //女性の形態素として登録する
-	    registerAsWomen(word, index);
+	    registerWomenMorpheme(word, index);
 	}
     }
 
-    public void registerAsMan(String word, int index) {
+    public void registerManMorpheme(String word, int index) {
 	
 	MenMatchWords.add(word);// その単語を文字列リストに格納。
 	MenIndexs.add(index);// そのインデックスを男性のみのインデックスを入れる整数型リストに格納。
@@ -88,7 +112,7 @@ public class SearchMorphemes {
 	
     }
     
-    public void registerAsWomen(String word, int index) {
+    public void registerWomenMorpheme(String word, int index) {
 	
 	WomenMatchWords.add(word);
 	WomenIndexs.add(index);
