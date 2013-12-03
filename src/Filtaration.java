@@ -40,7 +40,7 @@ public class Filtaration {
             System.out.printf("[%3d]", i+1);
             result = execute(contents[1],contents[2]);
             //仮のアルゴリズムの結果出力
-            System.out.println(result);
+            System.out.println("Algorithm : "+result);
             
             
             //SearchText st = new SearchText(i+1,contents[1],contents[2],"メンズ");
@@ -62,15 +62,21 @@ public class Filtaration {
 	AlgorithmInterface alg = new MorphemeAlgorithm(title,text);
 	//事前処理
 	alg.preProcess();
-	//アルゴリズム実行
+	//アルゴリズム計算
 	alg.process();
 	//事後処理
 	alg.postProcess();
 	//デバッグ用出力
-	//alg.print();
-	//結果返却
-	return alg.getIntegerResult();
-	
+	alg.print();
+	 
+	//適性検査の結果
+	if(alg.isQualified()==true){
+	    //pass
+	    return alg.getIntegerResult();
+	}else{
+	    //fail
+	    return -1;
+	}
     }
 
 

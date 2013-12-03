@@ -6,12 +6,10 @@ public class MorphemeDictionary {
     }
     
     //男性用キーワード
-    private String[] men ={ 
-	"イケメン", "デッキシューズ", "ヒゲ", "ひげ",
-	"ボクサー","トランクス", "カフス", "メンズ", "MENS", 
-	"Mens", "MEN'S", "男", "俺", "僕","Boy", 
-	"チノパン", "ミリタリー", "軍", "BOY",
-    };
+    private String[] men ={ "イケメン", "デッキシューズ", "ヒゲ", "ひげ",
+			    "ボクサー","トランクス", "カフス", "メンズ", "MENS", "軍", "BOY", 
+			    "Mens", "MEN'S", "男", "俺", "僕","Boy", 
+			    "チノパン", "ミリタリー",};
     //女性用キーワード
     private String[] women = { 
 	"キレイ", "きれい", "リボン", "カーラー",
@@ -26,19 +24,27 @@ public class MorphemeDictionary {
 	"バスト", "フレア", "ガーリー", "素敵", "パンプス",
 	"シルエット", "パフ", "ハート", "靴", "LOVE" ,
     };
+    private String[] exceptionalWords ={"食","飲","酒","女子会","ビール",};
+    
+    
     //不要な記号
     private String[] symbols;
     
+    //男性用の形態素を取得
     public String[] getMenWords(){
-	return men;
+	return this.men;
     }
-    
+    //女性用の形態素を取得
     public String[] getWomenWords(){
-	return women;
+	return this.women;
     }
-    
+    //不要な記号を取得
     public String[] getSymbols(){
 	return this.symbols;
+    }
+    //不要語登録された形態素を取得
+    public String[] getExceptionalWords(){
+	return this.exceptionalWords;
     }
     
 

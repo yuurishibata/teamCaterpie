@@ -6,72 +6,80 @@ public class MorphemeAlgorithm implements AlgorithmInterface{
     private ArrayList<String> MenWords = new ArrayList<String>();
     private ArrayList<String> WomenWords = new ArrayList<String>();
     //形態素を検索する
-    SearchMorphemes sam;
+    SearchMorphemes sm;
     //疑似データベース
-    private HashCodeDB hcdb;
+    private RDataDB hcdb;
     //検索結果の格納先
     private ArrayList<Integer> allIndexs = new ArrayList<Integer>();
     private ArrayList<Integer> WomenIndexs = new ArrayList<Integer>();
     private ArrayList<Integer> MenIndexs = new ArrayList<Integer>();
-    private ArrayList<Integer> SexDistinction = new ArrayList<Integer>();
+    private ArrayList<Integer> SexDistinctions = new ArrayList<Integer>();
     //返却値を返す直前のアルゴリズム計算で用いる変数
-    ArrayList<Double> results = new ArrayList<Double>();
+    ArrayList<RData> results = new ArrayList<RData>();
+    //executeの返却値
     private int result=0;
+    //アルゴリズム計算の結果を保持する変数
     private double resultDouble=0.0;
+    //適性検査の返却値
+    private boolean qualification = false; 
     
     // コンストラクタ
     public MorphemeAlgorithm(String title, String text) {
         //形態素をテキストから抽出するオブジェクト
-        sam = new SearchMorphemes(title,text);
+        sm = new SearchMorphemes(title,text);
         //Rの統計データを保持するオブジェクト
-        hcdb = new HashCodeDB();
+        hcdb = new RDataDB();
         
     }
     
+    /**
+     * アルゴリズムの計算準備
+     * このアルゴリズムの場合はブログ記事内の形態素の取得
+     */
     public void preProcess(){
 	
 	//検索開始
-	sam.search();
+	sm.search();
 	//合致した男性用形態素の取得
-        MenWords = sam.getMenMorphemes();
+        MenWords = sm.getMenMorphemes();
         //合致した女性用形態素の取得
-        WomenWords = sam.getWomenMorphemes();
+        WomenWords = sm.getWomenMorphemes();
         //合致した全ての形態素の位置の取得
-        allIndexs = sam.getAllIndexs();
+        allIndexs = sm.getAllIndexs();
         //合致した全ての形態素の性別を取得
-        SexDistinction = sam.getWordSex();
+        SexDistinctions = sm.getWordSex();
 	
-	
-    }
-
-    public void process() {
-	
-	//仮の値として男性なら[-1.0]
-	for(String s : MenWords){
+        //テキスト内に存在した男性の形態素のRの統計データを取得する
+        for(String s : MenWords){
 	    
-	    results.add(hcdb.getData(s));
+	    results.add(hcdb.getRData(s));
 	    
 	}
-	
-	//仮の値として女性なら[1.0]
+	//テキスト内に存在した女性の形態素のRの統計データを取得する
 	for(String s : WomenWords){
 	    
-	    results.add(hcdb.getData(s));
+	    results.add(hcdb.getRData(s));
 	    
 	}
-	
+    }
+
+    /**
+     * このクラスの心臓部
+     * アルゴリズムの計算内容のみを記述
+     */
+    public void process() {
 	
 	//仮のアルゴリズムの計算式 => 単純な総和
-	for(double d : results){
-	     
-	    resultDouble += d;
+	for(RData r : results){
+	    //暫定的にconfidenceの総和を求める
+	    resultDouble += r.getConfidence();
 	     
 	}
          
 	//仮のアルゴリズム
-	if(resultDouble > 2.0){
+	if(resultDouble >= 2.0){
 	    result = 2;
-	}else if(resultDouble > 0.0){
+	}else if(resultDouble >= 0.0){
 	    result = 0;
 	}else{
 	    result = 1;
@@ -79,20 +87,47 @@ public class MorphemeAlgorithm implements AlgorithmInterface{
          
     }
     
+    /**
+     * ブログのアプリ適正検査を実施。
+     */
     public void postProcess(){
+	
+	if(sm.containsException()==true){
+	    this.qualification =  false;
+	}else{
+
+	    this.qualification =  true;
+	    
+	}
+	
+    }
+    /**
+     * ブログのアプリ適性結果を返却
+     */
+    public boolean isQualified(){
+	
+	return this.qualification;
+	
     }
     
+    /**
+     * executeメソッドの返却(整数)
+     */
     public int getIntegerResult(){
 	
-	return result;
+	return this.result;
 	
     }
-    
+    /**
+     * processメソッドの計算結果(実数)
+     */
     public double getDoubleResult(){
 	
 	return this.resultDouble;
     }
-
+    /**
+     * コンソールに取得した全ての情報を出力する
+     */
     public void print() {
 	//マッチした形態素の性別を出力する
 	printWordSex();
@@ -113,7 +148,7 @@ public class MorphemeAlgorithm implements AlgorithmInterface{
 	}
 	
 	System.out.print("\n形態素の性別 : ");//改行
-	for(int sd : SexDistinction){
+	for(int sd : SexDistinctions){
 	    
 	    System.out.print(sd);
 	    
@@ -211,9 +246,9 @@ public class MorphemeAlgorithm implements AlgorithmInterface{
 	
 	double result =0;
 	
-	for(double d : results){
+	for(RData r : results){
 	    
-	    result += d;
+	    result += r.getConfidence();
 	    
 	}
 	
