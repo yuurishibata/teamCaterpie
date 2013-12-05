@@ -67,16 +67,20 @@ public class Filtaration {
 	//事後処理
 	alg.postProcess();
 	//デバッグ用出力
-	alg.print();
+	//alg.print();
 	 
+	//実演1
+	return alg.getIntegerResult();
+	 
+	//実演2
 	//適性検査の結果
-	if(alg.isQualified()==true){
+	/**if(alg.isQualified()==true){
 	    //pass
-	    return alg.getIntegerResult();
-	}else{
-	    //fail
-	    return -1;
-	}
+	     return alg.getIntegerResult();
+	      }else{
+	      //fail
+	       return -1;
+	       }**/
     }
 
 
