@@ -22,14 +22,13 @@ public class MorphemeDictionary {
 	"ボーイッシュ", "ショートパンツ", "胸元", "レース", 
 	"ヒップ", "ライン", "ウエスト","キャミソール", 
 	"バスト", "フレア", "ガーリー", "素敵", "パンプス",
-	"シルエット", "パフ", "ハート", "靴", "LOVE" ,
+	"シルエット", "パフ", "ハート", "靴", "LOVE" ,};
+    //不要語のキーワード
+    private String[] unnecessaryWords={
+	"食","飲","酒","女子会","ビール","料理","食事会","アルコール","味",
     };
-    private String[] exceptionalWords ={"食","飲","酒","女子会","ビール",};
-    
-    
     //不要な記号
     private String[] symbols;
-    
     //男性用の形態素を取得
     public String[] getMenWords(){
 	return this.men;
@@ -43,8 +42,8 @@ public class MorphemeDictionary {
 	return this.symbols;
     }
     //不要語登録された形態素を取得
-    public String[] getExceptionalWords(){
-	return this.exceptionalWords;
+    public String[] getUnnecessaryWords(){
+	return this.unnecessaryWords;
     }
     
 

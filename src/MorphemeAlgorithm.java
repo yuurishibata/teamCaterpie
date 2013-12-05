@@ -1,21 +1,21 @@
 import java.util.*;
 
 public class MorphemeAlgorithm implements AlgorithmInterface{
-
+    //形態素を検索するオブジェクト
+    SearchMorphemes sm;
+    //特殊なオブジェクト
+    private RDataDB rddb;
     // 辞書の形態素とブログ記事を照合して合致した単語を格納する
     private ArrayList<String> MenWords = new ArrayList<String>();
     private ArrayList<String> WomenWords = new ArrayList<String>();
-    //形態素を検索する
-    SearchMorphemes sm;
-    //疑似データベース
-    private RDataDB hcdb;
     //検索結果の格納先
-    private ArrayList<Integer> allIndexs = new ArrayList<Integer>();
-    private ArrayList<Integer> WomenIndexs = new ArrayList<Integer>();
-    private ArrayList<Integer> MenIndexs = new ArrayList<Integer>();
+    private ArrayList<Integer> allIndexs = new ArrayList<Integer>();//全ての形態素の位置
+    private ArrayList<Integer> WomenIndexs = new ArrayList<Integer>();//女性用の形態素の位置
+    private ArrayList<Integer> MenIndexs = new ArrayList<Integer>();//男性用の形態素の位置
+    //整数値で辞書の形態素の性別を示したもの
     private ArrayList<Integer> SexDistinctions = new ArrayList<Integer>();
     //返却値を返す直前のアルゴリズム計算で用いる変数
-    ArrayList<RData> results = new ArrayList<RData>();
+    ArrayList<RData> Rs = new ArrayList<RData>();
     //executeの返却値
     private int result=0;
     //アルゴリズム計算の結果を保持する変数
@@ -28,7 +28,7 @@ public class MorphemeAlgorithm implements AlgorithmInterface{
         //形態素をテキストから抽出するオブジェクト
         sm = new SearchMorphemes(title,text);
         //Rの統計データを保持するオブジェクト
-        hcdb = new RDataDB();
+        rddb = new RDataDB();
         
     }
     
@@ -37,28 +37,45 @@ public class MorphemeAlgorithm implements AlgorithmInterface{
      * このアルゴリズムの場合はブログ記事内の形態素の取得
      */
     public void preProcess(){
-	
+	//形態素などを属性値に設定する
+	setMorphemes();
+        //Rのデータなどを属性値に設定する
+        setRData();
+    }
+    /**
+     * ブログ内容と形態素辞書内の形態素を照合し
+     * ブログ内に存在する形態素を取得する
+     */
+    public void setMorphemes() {
 	//検索開始
 	sm.search();
 	//合致した男性用形態素の取得
         MenWords = sm.getMenMorphemes();
+        //合致した男性用の形態素の位置の取得
+        MenIndexs = sm.getMenIndexs();
         //合致した女性用形態素の取得
         WomenWords = sm.getWomenMorphemes();
+        //合致した女性用形態素の位置の取得
+        WomenIndexs = sm.getWomenIndexs();
         //合致した全ての形態素の位置の取得
         allIndexs = sm.getAllIndexs();
         //合致した全ての形態素の性別を取得
-        SexDistinctions = sm.getWordSex();
-	
-        //テキスト内に存在した男性の形態素のRの統計データを取得する
+        SexDistinctions = sm.getSexDistinctions();
+    }
+    /**
+     * 形態素からRDataDBに登録されているRの統計データを取得してArrayListに格納する
+     */
+    public void setRData() {
+	//テキスト内に存在した男性の形態素のRの統計データを取得する
         for(String s : MenWords){
 	    
-	    results.add(hcdb.getRData(s));
+	    Rs.add(rddb.getRData(s));
 	    
 	}
 	//テキスト内に存在した女性の形態素のRの統計データを取得する
 	for(String s : WomenWords){
 	    
-	    results.add(hcdb.getRData(s));
+	    Rs.add(rddb.getRData(s));
 	    
 	}
     }
@@ -70,9 +87,9 @@ public class MorphemeAlgorithm implements AlgorithmInterface{
     public void process() {
 	
 	//仮のアルゴリズムの計算式 => 単純な総和
-	for(RData r : results){
+	for(RData R : Rs){
 	    //暫定的にconfidenceの総和を求める
-	    resultDouble += r.getConfidence();
+	    resultDouble += R.getConfidence();
 	     
 	}
          
@@ -91,11 +108,13 @@ public class MorphemeAlgorithm implements AlgorithmInterface{
      * ブログのアプリ適正検査を実施。
      */
     public void postProcess(){
-	
-	if(sm.containsException()==true){
+	//ブログとして不適切なコンテンツを含むか否かを検証
+	if(sm.containsUnnecessaryWord()==true){
+	    //適性なし
 	    this.qualification =  false;
+	    
 	}else{
-
+	    //問題なし
 	    this.qualification =  true;
 	    
 	}
@@ -246,9 +265,9 @@ public class MorphemeAlgorithm implements AlgorithmInterface{
 	
 	double result =0;
 	
-	for(RData r : results){
+	for(RData R : Rs){
 	    
-	    result += r.getConfidence();
+	    result += R.getConfidence();
 	    
 	}
 	
