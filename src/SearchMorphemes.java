@@ -41,14 +41,33 @@ public class SearchMorphemes {
 		//男性の形態素の探索なので最後の引数はtrue
 		register(word,title.indexOf(word),true);
 	    }
-	    //本文の探索。
-	    if (text.contains(word)) {
-		register(word,text.indexOf(word),true);
-		//同じ単語が複数存在する場合
-		if (text.indexOf(word) != text.lastIndexOf(word)) {
-		    register(word,text.lastIndexOf(word),true);
-		}
+	                
+	    //本文の検索。本文は一つの形態素が複数ある場合があるので
+	    //すべて発見するためにfor文で単語がテキストにある数だけループを回す。
+	    //受け取ったtextの内部にあるキーワードを完全に発見するループ文
+	    for(;0<= text.indexOf(word);){
+		
+		//形態素の単語の長さ
+		int length = word.length();
+		//テキスト内部の探し当てた形態素の位置
+		int index = text.indexOf(word);
+		//形態素までのテキストの位置
+		int from = index;
+		//形態素を含まない形態素の後ろのテキストの位置
+		int to = index + length;
+		//該当する形態素をこのクラスの属性値に格納するメソッド
+		register(word,index,true);
+		
+		//合致した形態素を取り除くための準備
+		//形態素までのテキスト前半
+		String HalfOfText_x = text.substring(0,from );
+		//形態素からのテキスト後半
+		String HalfOfText_y = text.substring(to,text.length());
+		//合致した形態素を取り除いた残りのブログ記事
+		//同じ形態素が含まれている場合、ループを繰り返す
+		text = HalfOfText_x+HalfOfText_y;
 	    }
+	                
 	}
 
 	// 女性用の形態素を検索する。
@@ -59,12 +78,28 @@ public class SearchMorphemes {
 		register(word,title.indexOf(word),false);
 	    }
 	    //本文の検索。
-	    if (text.contains(word)) {
-		register(word,text.indexOf(word),false);
-		//同じ単語が複数存在する場合
-		if (text.indexOf(word) != text.lastIndexOf(word)) {
-		    register(word,text.lastIndexOf(word),false);
-		}
+	    for(;0<= text.indexOf(word);){
+		
+		//形態素の単語の長さ
+		int length = word.length();
+		//テキスト内部の探し当てた形態素の位置
+		int index = text.indexOf(word);
+		//形態素までのテキストの位置
+		int from = index;
+		//形態素を含まない形態素の後ろのテキストまでの位置
+		int to = index + length;
+		
+		//該当する形態素をこのクラスの属性値に格納するメソッド
+		register(word,index,false);
+		
+		//合致した形態素を取り除くための準備
+		//形態素までのテキスト
+		String HalfOfText_x = text.substring(0,from );
+		//形態素からのテキスト
+		String HalfOfText_y = text.substring(to,text.length());
+		//合致した形態素を取り除いた残りのブログ記事
+		//同じ形態素が含まれている場合、ループを繰り返す
+		text = HalfOfText_x+ HalfOfText_y;
 	    }
 	}
 
