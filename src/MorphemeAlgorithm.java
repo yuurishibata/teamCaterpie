@@ -9,7 +9,7 @@ public class MorphemeAlgorithm implements AlgorithmInterface{
     private ArrayList<String> MenWords = new ArrayList<String>();
     private ArrayList<String> WomenWords = new ArrayList<String>();
     //検索結果の格納先
-    private ArrayList<Integer> allIndexs = new ArrayList<Integer>();//全ての形態素の位置
+    private ArrayList<Integer> AllIndexs = new ArrayList<Integer>();//全ての形態素の位置
     private ArrayList<Integer> WomenIndexs = new ArrayList<Integer>();//女性用の形態素の位置
     private ArrayList<Integer> MenIndexs = new ArrayList<Integer>();//男性用の形態素の位置
     //整数値で辞書の形態素の性別を示したもの
@@ -58,7 +58,7 @@ public class MorphemeAlgorithm implements AlgorithmInterface{
         //合致した女性用形態素の位置の取得
         WomenIndexs = sm.getWomenIndexs();
         //合致した全ての形態素の位置の取得
-        allIndexs = sm.getAllIndexs();
+        AllIndexs = sm.getAllIndexs();
         //合致した全ての形態素の性別を取得
         SexDistinctions = sm.getSexDistinctions();
     }
@@ -183,19 +183,19 @@ public class MorphemeAlgorithm implements AlgorithmInterface{
         System.out.print("INDEXS : [");
 
         // 辞書とのキーワードにマッチしてない
-        if (allIndexs.isEmpty() == true) {
+        if (AllIndexs.isEmpty() == true) {
             // 何もないことを表示
             System.out.print("NONE");
             
         }else {
 	    
 	    //辞書とのキーワードにマッチした
-            for (int i = 0; i < allIndexs.size(); i++) {
+            for (int i = 0; i < AllIndexs.size(); i++) {
                 // 最後の要素だけは、見やすさのために一工夫
-                if (i == allIndexs.size() - 1) {
-                    System.out.print(allIndexs.get(allIndexs.size() - 1));
+                if (i == AllIndexs.size() - 1) {
+                    System.out.print(AllIndexs.get(AllIndexs.size() - 1));
                 } else {
-                    System.out.print(allIndexs.get(i) + ",");
+                    System.out.print(AllIndexs.get(i) + ",");
                 }
             }
         }
@@ -219,7 +219,7 @@ public class MorphemeAlgorithm implements AlgorithmInterface{
             System.out.print("*" + s + "*");
         }
         // 改行
-        if (allIndexs.isEmpty() == false) {
+        if (AllIndexs.isEmpty() == false) {
             System.out.print("\n");
         }
     }
