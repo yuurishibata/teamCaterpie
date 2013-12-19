@@ -1,3 +1,8 @@
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.*;
 
 public class MorphemeAlgorithm implements AlgorithmInterface{
@@ -16,6 +21,9 @@ public class MorphemeAlgorithm implements AlgorithmInterface{
     private ArrayList<Integer> SexDistinctions = new ArrayList<Integer>();
     //返却値を返す直前のアルゴリズム計算で用いる変数
     ArrayList<RData> Rs = new ArrayList<RData>();
+    //男性と女性の判断する実数値の二つの値
+    double high =2;//デフォルトで2
+    double low =0;//デフォルトで0
     //executeの返却値
     private int result=0;
     //アルゴリズム計算の結果を保持する変数
@@ -24,11 +32,18 @@ public class MorphemeAlgorithm implements AlgorithmInterface{
     private boolean qualification = false; 
     
     // コンストラクタ
-    public MorphemeAlgorithm(String title, String text) {
+    public MorphemeAlgorithm(String title, String text) throws IOException{
         //形態素をテキストから抽出するオブジェクト
         sm = new SearchMorphemes(title,text);
         //Rの統計データを保持するオブジェクト
         rddb = new RDataDB();
+        
+        //ファイルを読み込んで属性値に男女の水準数値を代入する
+        try{
+	    readFile();
+        }catch(IOException ioe){
+	    
+        }
         
     }
     
@@ -94,9 +109,9 @@ public class MorphemeAlgorithm implements AlgorithmInterface{
 	}
          
 	//仮のアルゴリズム
-	if(resultDouble >= 2.0){
+	if(resultDouble >= high){
 	    result = 2;
-	}else if(resultDouble >= 0.0){
+	}else if(resultDouble >= low){
 	    result = 0;
 	}else{
 	    result = 1;
@@ -132,7 +147,7 @@ public class MorphemeAlgorithm implements AlgorithmInterface{
     /**
      * executeメソッドの返却(整数)
      */
-    public int getIntegerResult(){
+    public int getStandardResult(){
 	
 	return this.result;
 	
@@ -140,10 +155,39 @@ public class MorphemeAlgorithm implements AlgorithmInterface{
     /**
      * processメソッドの計算結果(実数)
      */
-    public double getDoubleResult(){
+    public double getPerspectiveResult(){
 	
 	return this.resultDouble;
     }
+    /**
+     * ファイル読み込み
+     */
+    private void readFile()throws IOException{
+	// path
+	String path = "number.csv";
+	BufferedReader input = new BufferedReader(new FileReader(path));
+	//BufferedReader input = new BufferedReader( new InputStreamReader( new FileInputStream(path),"Shift-JIS"));
+	// one line
+	String line;
+	String[] RData;
+	// setup each RData
+	while ((line = input.readLine()) != null) {
+
+	    RData = line.split(",");
+	    // change Type from String to Double
+	    high = Double.parseDouble(RData[0]);
+	    low = Double.parseDouble(RData[1]);
+	    
+	    
+	    
+	}
+
+	// close
+	input.close();
+	
+	
+    }
+    
     /**
      * コンソールに取得した全ての情報を出力する
      */
