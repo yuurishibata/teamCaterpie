@@ -1,14 +1,15 @@
 class RData {
-    //Rのデータを属性値として持つクラス。
+
     private double support = 0.0;
     private double confidence = 0.0;
     private double lift = 0.0;
 
-    // 引数なしコンストラクタ
+    // constructor
     public RData() {
 	this(0.0, 0.0, 0.0);
     }
 
+    // constructor
     public RData(double support, double confidence, double lift) {
 
 	this.support = support;
