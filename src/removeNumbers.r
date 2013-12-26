@@ -1,3 +1,8 @@
+#バグが存在します。使用ｖしないでください。
+
+
+
+
 #一つの数値を削除する関数
 removeNumber <- function(string,number){
   
