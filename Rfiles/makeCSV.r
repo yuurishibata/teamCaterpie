@@ -104,6 +104,6 @@ removeURL <- function(x){
 alltexts <- removeURLs(alltexts)
 alltexts <- makeCSV(alltexts)
 write(alltexts,file=outputpath)
-rm(list=ls())
+#rm(list=ls())
 
 
