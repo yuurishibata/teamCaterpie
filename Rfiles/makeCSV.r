@@ -1,69 +1,117 @@
-#注意
-#このプログラムはプログラムを完了するとワークスペースに
-#存在する変数あるいはオブジェクトをすべて削除するように
-#作成されています。
-
-#なのでその点に必ず配慮してください。
-
-
 #ファイルの入力からCSVファイルの出力まで
 library(RMeCab)
-#入力ファイルのパスと出力ファイルのパスを指定する。
+library(RMeCab)
+
+#入力ファイルのファイル名
 inputpath = "sample-SJIS.txt";
-outputpath = "C:/Users/TO/Documents/R.csv"#最後はファイル名
+#出力ファイルのファイル名
+filename = "onlyMorphemes.csv"
+
+wd <- getwd()
+wd <- paste(wd,"/",sep="")
+wd <- paste(wd,filename,sep="")
+
+
 #全てのテキストデータを読み込む
 alltexts <- readLines(inputpath)
-#この後、必要な関数を変数に格納する。
-#形態素解析した文章を元通りに復元する関数
-remake <- function(x){
 
-       string <- x[1]
+#不要語削除の鍵を握るプログラム
+#正規表現を第二引数に指定しても機能する
 
-       for(i in 2:length(x)){
+removeCharacter <- function(string,character){ 
 
-       string <- paste(string,x[i],sep="")
- #最後の引数にカンマを入れると各形態素をカンマ区切りに
- #してくれます。
+ while((index <- c(unlist(regexpr(character,string))))!=-1){
 
- }
- 
+  #文章前半
+  X <- substring(string,0,index-1)
+  #文章後半
+  Y <- substring(string,index+1,nchar(string))
+  #文章の再構成
+  string <- paste(X,Y,sep="")
+
+  }
+
  return(string)
 
 }
+
+#複数の不要語を削除するプログラム
+#引数に受け取るブログは1つのみ
+
+removeCharacters <- function(blog){
+ #正規表現
+ regs <- c("[[:digit:]]","[[:punct:]]")
+ #不要語をここに記述する
+ unnecessaryWords <- c("★","☆","。","●","○")
+
+ for(i in 1:length(regs)){
+
+ blog <- removeCharacter(blog,regs[i])
+
+ }
+
+ for(i in 1:length(unnecessaryWords)){
+
+ blog <- removeCharacter(blog,unnecessaryWords[i])
+
+ }
+
+ return(blog)
+
+}
+
+#複数のブログから不要な数値・記号を取り除く処理を行う。
+removeCharactersFromBlogs <- function(allblogs){
+
+ times <- length(allblogs)
+
+ for(i in 1:times){
+
+ allblogs[i] <- removeCharacters(allblogs[i])
+
+ }
+
+ return(allblogs)
+
+}
+
 #引数の文字列を形態素解析する関数
 #形態素の順番通りに数値を割り振る、この関数に引数の数値を渡すと
 #その数値をそのエントリーのブログ番号として各列の先頭としてすべての行
 #に追記する。
-#library(RMeCab)
 makeMorphemes <- function(string,number){
 
-	      morphemes <- RMeCabC(string)
-	      morphemes <- c(unlist(morphemes))
-	      
-	      blogNumber = number
+  #形態素解析の処理
+　morphemes <- RMeCabC(morphemes)
+  morphemes <- c(unlist(morphemes))
+              
+  blogNumber = number
 
-	      result <- ""
-	      times <- length(morphemes)#追加
+  #返却する文字列
+  result <- ""
+  times <- length(morphemes)
 
-	      for(i in 1:times){#length(morphemes)＝＞times
-	      
-	      number = i
-	      morphemes[i]
-	      
-	      line <- paste(blogNumber,number,sep=",")
-	      line <- paste(line,morphemes[i],sep=",")
+  for(i in 1:times){
+              
+  number = i
+  morphemes[i]
+              
+  line <- paste(blogNumber,number,sep=",")
+  line <- paste(line,morphemes[i],sep=",")
+　
+  #各ブログの間に一行空かないようにする
+  #処理
+  if(i!=times){
 
-	      if(i!=times){#追加
-	      line <- paste(line,"\n")
-	      }#追加
+  line <- paste(line,"\n",sep="")
+  
+  }
 
-	      result <- paste(result,line)
+  result <- paste(result,line)
+                
+  }
 
-	      #print(result)
-		
-		}
-
-		return(result)
+  return(result)
 
 }
 #上のカンマ区切りを利用した関数makeCSV.
@@ -79,31 +127,49 @@ makeCSV <- function(blogs){
 }
 #次にURLのみをブログから除去する関数を変数に追加。
 #removeURL関数ダミーデータからURLを削除するプログラム
+
 removeURL <- function(x){
-  
+
+  #タブ区切りで分割
   splited <- strsplit(x,"\t")
+  #splitedのベクトル化
   Vsplited <- c(unlist(splited))
+  #タイトル
   title <- Vsplited[2]
+  #本文
   content <- Vsplited[3]
-  
-  return(contents <- paste(title,content,""))
+  #その両方
+  contents <- paste(title,content,"")
+
+  return(contents)
  
- }
+}
 #removeURLs関数
- removeURLs <- function(x){
- 
+removeURLs <- function(x){
  
   for(i in 1:length(x)){
      x[i] <- removeURL(x[i])
   }
  
   return(x)
- }
+}
 #必要な関数が準備できたので、
 #これからコードを記述していく。
 alltexts <- removeURLs(alltexts)
+alltexts <- removeCharactersFromBlogs(alltexts)
 alltexts <- makeCSV(alltexts)
-write(alltexts,file=outputpath)
-rm(list=ls())
+write(alltexts,file=wd)
 
-
+#事後処理
+#このプログラムで作成したオブジェクトすべて削除する
+rm(alltexts)
+rm(filename)
+rm(inputpath)
+rm(makeCSV)
+rm(removeURLs)
+rm(removeURL)
+rm(wd)
+rm(makeMorphemes)
+rm(removeCharactersFromBlogs)
+rm(removeCharacters)
+rm(removeCharacter)
