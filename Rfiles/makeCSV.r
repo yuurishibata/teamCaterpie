@@ -11,7 +11,6 @@ wd <- getwd()
 wd <- paste(wd,"/",sep="")
 wd <- paste(wd,filename,sep="")
 
-
 #全てのテキストデータを読み込む
 alltexts <- readLines(inputpath)
 
@@ -153,6 +152,7 @@ removeURLs <- function(x){
  
   return(x)
 }
+
 #必要な関数が準備できたので、
 #これからコードを記述していく。
 alltexts <- removeURLs(alltexts)
