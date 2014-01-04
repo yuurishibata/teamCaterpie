@@ -25,7 +25,8 @@ countRemoval <- function(string,character){
 }
 
 #連関規則のコンソール出力を保持するオブジェクト
-#を、連関規則を
+#を、連関規則のペアごとに一つのベクトルに格納するように
+#再構成する関数。
 getPair <- function(vectors){
 　
 　#ポインタの位置をベクトルの先頭にする。
